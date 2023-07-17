@@ -24,7 +24,7 @@ class _CounterProviderPageState extends State<CounterProviderPage> {
           Spacer(),
 
           Text(
-            'Contador Stateful',
+            'Contador Provider',
             style: TextStyle(fontSize: 20),
           ),
 
