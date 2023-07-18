@@ -1,20 +1,29 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:bases_web/provider/counter_provider_page.dart';
 import 'package:bases_web/ui/shared/custom_app_menu.dart';
 import 'package:bases_web/ui/shared/custom_flat_button.dart';
-import 'package:flutter/material.dart';
 
-class CounterProviderPage extends StatefulWidget {
+class CounterProviderPage extends StatelessWidget {
   const CounterProviderPage({super.key});
 
   @override
-  State<CounterProviderPage> createState() => _CounterProviderPageState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => CounterProvider(),
+      child: _CounterProviderPageBody()
+    );
+  }
 }
 
-class _CounterProviderPageState extends State<CounterProviderPage> {
-
-  int counter = 15;
+class _CounterProviderPageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final counterProvider = Provider.of<CounterProvider>(context);
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -33,7 +42,7 @@ class _CounterProviderPageState extends State<CounterProviderPage> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Text(
-                'Contador: $counter',
+                'Contador: ${counterProvider.counter}',
                 style: TextStyle(fontSize: 80, fontWeight: FontWeight.bold),
               ),
             ),
@@ -43,11 +52,11 @@ class _CounterProviderPageState extends State<CounterProviderPage> {
             children: [
               CustomFlatButton(
                 text: 'Incrementar',
-                onPressed: () => setState(() => counter++),
+                onPressed: () => counterProvider.increment(),
               ),
               CustomFlatButton(
                 text: 'Decrementar',
-                onPressed: () => setState(() => counter--),
+                onPressed: () => counterProvider.decrement(),
               ),
             ],
           ),
